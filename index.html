@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محول العملات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .tab-buttons button {
+            flex: 1;
+            padding: 10px;
+            margin: 0 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tab-buttons button:hover {
+            background-color: #45a049;
+        }
+        .tab-buttons button.active {
+            background-color: #45a049;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .tab-content button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tab-content button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>قسم الدينار</h2>
+        <div class="tab-buttons">
+            <button id="tab-jod-to-usdt" class="active" onclick="openTab('jod-to-usdt')">دينار</button>
+            <button id="tab-usdt-to-jod" onclick="openTab('usdt-to-jod')"> USDT ادخل </button></button>
+        </div>
+        <div id="jod-to-usdt" class="tab-content active">
+            <input type="number" id="jod" placeholder="المبلغ بالدينار الأردني">
+            <button onclick="convertJODToUSDT()">النتيجة</button>
+            <div id="result-jod" class="result"></div>
+        </div>
+        <div id="usdt-to-jod" class="tab-content">
+            <input type="number" id="usdt-to-jod-input" placeholder="USDT  المبلغ بال">
+            <button onclick="convertUSDTToJOD()">المبلغ المطلوب</button>
+            <div id="result-usdt-to-jod" class="result"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>قسم الدولار</h2>
+        <div class="tab-buttons">
+            <button id="tab-usd-to-usdt" class="active" onclick="openTab('usd-to-usdt')">دولار</button>
+            <button id="tab-usdt-to-usd" onclick="openTab('usdt-to-usd')">USDT</button>
+        </div>
+        <div id="usd-to-usdt" class="tab-content active">
+            <input type="number" id="usd" placeholder="المبلغ بالدولار الأمريكي">
+            <button onclick="convertUSDToUSDT()">تحويل إلى USDT</button>
+            <div id="result-usd" class="result"></div>
+        </div>
+        <div id="usdt-to-usd" class="tab-content">
+            <input type="number" id="usdt-to-usd-input" placeholder="المبلغ بـ USDT">
+            <button onclick="convertUSDTToUSD()">تحويل إلى دولار أمريكي</button>
+            <div id="result-usdt-to-usd" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(tabId) {
+            let container = document.getElementById(tabId).closest('.container');
+            container.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            container.querySelectorAll('.tab-buttons button').forEach(button => button.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+        }
+
+        function convertJODToUSDT() {
+            let jodAmount = document.getElementById('jod').value;
+            let usdtAmount = jodAmount / 0.73;
+            document.getElementById('result-jod').innerText = 'المبلغ بالـ USDT: ' + usdtAmount.toFixed(2);
+        }
+
+        function convertUSDTToJOD() {
+            let usdtAmount = document.getElementById('usdt-to-jod-input').value;
+            let jodAmount = usdtAmount * 0.73;
+            document.getElementById('result-usdt-to-jod').innerText = 'المبلغ بالدينار الأردني: ' + jodAmount.toFixed(2);
+        }
+
+        function convertUSDToUSDT() {
+            let usdAmount = document.getElementById('usd').value;
+            let usdtAmount = usdAmount * 0.93;
+            document.getElementById('result-usd').innerText = 'المبلغ بالـ USDT: ' + usdtAmount.toFixed(2);
+        }
+
+        function convertUSDTToUSD() {
+            let usdtAmount = document.getElementById('usdt-to-usd-input').value;
+            let usdAmount = usdtAmount / 0.93;
+            document.getElementById('result-usdt-to-usd').innerText = 'المبلغ بالدولار الأمريكي: ' + usdAmount.toFixed(2);
+        }
+    </script>
+</body>
+</html>
